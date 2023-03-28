@@ -32,6 +32,7 @@ class User extends Authenticatable
 
         static::creating(function ($model) {
             $model->id = (string) Str::uuid();
+            $model->email_verification_code = rand(100000, 999999);
         });
     }
 }

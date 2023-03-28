@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PublicControllers\GeneralController;
+use App\Http\Controllers\PublicControllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('/v1')->group(function() {
+
+    Route::get('/test', [GeneralController::class, 'test']);
+
+    Route::prefix('/general')->group(function() {
+        Route::get('/', [GeneralController::class, 'getSettings']);
+    });
+
+    Route::prefix('/user')->group(function() {
+        Route::post('/register', [UserController::class, 'register']);
+        Route::post('/authenticate', [UserController::class, 'authenticate']);
+    });
+
 });
