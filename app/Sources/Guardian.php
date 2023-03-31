@@ -25,8 +25,12 @@ class Guardian implements SourceInterface
 
     public function savePosts()
     {
+        $array_of_checks = Post::where('source_id', self::getSource()->id)->pluck('check')->toArray();
+
         $posts = $this->getPosts();
         foreach ($posts as $post) {
+            if (in_array(md5($post['id']), $array_of_checks)) continue;
+
             $new_post = new Post;
             $new_post->source_id = self::getSource()->id;
             $new_post->title = $post['webTitle'];
@@ -37,7 +41,7 @@ class Guardian implements SourceInterface
             $new_post->details = [
                 'url' => $post['webUrl'],
             ];
-            $new_post->check = Hash::make($post['id']);
+            $new_post->check = md5($post['id']);
             $new_post->save();
         }
     }
