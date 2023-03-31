@@ -38,7 +38,7 @@ class GeneralSetting extends Model
         return self::where('key', $key)->first();
     }
 
-    public static function setSetting($key, $value)
+    public static function setPublicSetting($key, $value)
     {
         $setting = self::getSetting($key);
         if ($setting) {
@@ -49,6 +49,21 @@ class GeneralSetting extends Model
                 'key' => $key,
                 'value' => $value,
                 'type' => 'public',
+            ]);
+        }
+    }
+
+    public static function setPrivateSetting($key, $value)
+    {
+        $setting = self::getSetting($key);
+        if ($setting) {
+            $setting->value = $value;
+            $setting->save();
+        } else {
+            self::create([
+                'key' => $key,
+                'value' => $value,
+                'type' => 'private',
             ]);
         }
     }
