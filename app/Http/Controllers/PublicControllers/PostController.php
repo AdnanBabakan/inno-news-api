@@ -23,12 +23,14 @@ class PostController extends Controller
         }
 
         if($request->has('after')) {
-            $posts_query->where('published_at', '>', $request->after);
+            $posts_query->where('published_at', '>=', $request->after);
         }
 
         if($request->has('before')) {
-            $posts_query->where('published_at', '<', $request->before);
+            $posts_query->where('published_at', '<=', $request->before);
         }
+
+        $posts_query->orderBy('published_at', 'desc');
 
         return $posts_query->paginate(10);
     }
