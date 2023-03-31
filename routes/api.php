@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PublicControllers\GeneralController;
+use App\Http\Controllers\PublicControllers\PostController;
 use App\Http\Controllers\PublicControllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,5 +28,9 @@ Route::prefix('/v1')->group(function() {
     Route::prefix('/user')->group(function() {
         Route::post('/register', [UserController::class, 'register']);
         Route::post('/authenticate', [UserController::class, 'authenticate']);
+    });
+
+    Route::prefix('/posts')->group(function() {
+        Route::get('/', [PostController::class, 'index']);
     });
 });
