@@ -42,6 +42,7 @@ class Guardian implements SourceInterface
                 'url' => $post['webUrl'],
             ];
             $new_post->check = md5($post['id']);
+            $new_post->by = 'The Guardian';
             $new_post->save();
         }
     }
