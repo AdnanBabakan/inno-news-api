@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PublicControllers\GeneralController;
 use App\Http\Controllers\PublicControllers\PostController;
+use App\Http\Controllers\PublicControllers\PublisherController;
 use App\Http\Controllers\PublicControllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,5 +33,9 @@ Route::prefix('/v1')->group(function() {
 
     Route::prefix('/posts')->group(function() {
         Route::get('/', [PostController::class, 'index']);
+    });
+
+    Route::prefix('/publishers')->group(function() {
+        Route::get('/', [PublisherController::class, 'index']);
     });
 });
