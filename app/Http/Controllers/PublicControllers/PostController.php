@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PublicControllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -24,11 +25,11 @@ class PostController extends Controller
         }
 
         if ($request->has('after')) {
-            $posts_query->where('published_at', '>=', $request->after);
+            $posts_query->where('published_at', '>=', Carbon::parse($request->after));
         }
 
         if ($request->has('before')) {
-            $posts_query->where('published_at', '<=', $request->before);
+            $posts_query->where('published_at', '<=', Carbon::parse($request->before));
         }
 
         $posts_query->orderBy('published_at', 'desc');

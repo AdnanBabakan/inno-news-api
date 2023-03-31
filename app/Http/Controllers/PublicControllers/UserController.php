@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PublicControllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -23,6 +24,7 @@ class UserController extends Controller
         $new_user->first_name = $request->first_name;
         $new_user->last_name = $request->last_name;
         $new_user->email = $request->email;
+        $new_user->email_verified_at = Carbon::now();
         $new_user->password = Hash::make($request->password);
         $new_user->save();
 
