@@ -12,21 +12,22 @@ class PostController extends Controller
     {
         $posts_query = (new Post)->newQuery();
 
-        if($request->has('by')) {
-            $posts_query->where('by', $request->by);
+        if ($request->has('by')) {
+            $by_split = explode(',', $request->by);
+            $posts_query->whereIn('by', $by_split);
         }
 
-        if($request->has('q')) {
+        if ($request->has('q')) {
             $posts_query->where('title', 'like', '%' . $request->q . '%')
-            ->orWhere('excerpt', 'like', '%' . $request->q . '%')
-            ->orWhere('by', 'like', '%' . $request->q . '%');
+                ->orWhere('excerpt', 'like', '%' . $request->q . '%')
+                ->orWhere('by', 'like', '%' . $request->q . '%');
         }
 
-        if($request->has('after')) {
+        if ($request->has('after')) {
             $posts_query->where('published_at', '>=', $request->after);
         }
 
-        if($request->has('before')) {
+        if ($request->has('before')) {
             $posts_query->where('published_at', '<=', $request->before);
         }
 
