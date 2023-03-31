@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Sources;
+namespace App\Sources\Drivers;
 
 use App\Models\Post;
 use App\Models\Source;
 use App\Sources\interfaces\SourceInterface;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 
 class Guardian implements SourceInterface

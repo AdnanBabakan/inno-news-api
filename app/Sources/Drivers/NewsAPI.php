@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Sources;
+namespace App\Sources\Drivers;
 
 use App\Models\Post;
 use App\Models\Source;
+use App\Sources\interfaces;
 use Illuminate\Support\Facades\Http;
 
 class NewsAPI implements interfaces\SourceInterface
