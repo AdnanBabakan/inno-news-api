@@ -11,4 +11,13 @@ class XUserController extends Controller
     {
         return $request->user();
     }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return [
+            'status' => 'SUCCESSFUL',
+            'message' => 'LOGGED_OUT_SUCCESSFULLY'
+        ];
+    }
 }

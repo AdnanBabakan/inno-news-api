@@ -47,7 +47,12 @@ class User extends Authenticatable
         static::created(function ($model) {
             $new_feed = new Feed;
             $new_feed->user_id = $model->id;
-            $new_feed->settings = [];
+            $new_feed->settings = [
+                'by' => '',
+                'q' => '',
+                'after' => '',
+                'before' => ''
+            ];
             $new_feed->save();
         });
     }

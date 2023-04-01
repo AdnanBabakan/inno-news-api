@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PrivateControllers\FeedController;
 use App\Http\Controllers\PrivateControllers\XUserController;
 use App\Http\Controllers\PublicControllers\GeneralController;
 use App\Http\Controllers\PublicControllers\PostController;
@@ -44,6 +45,12 @@ Route::prefix('/v1')->group(function() {
 
         Route::prefix('/x-user')->group(function() {
             Route::get('/', [XUserController::class, 'index']);
+            Route::post('/logout', [XUserController::class, 'logout']);
+        });
+
+        Route::prefix('/feed')->group(function() {
+            Route::get('/', [FeedController::class, 'index']);
+            Route::get('/posts', [FeedController::class, 'posts']);
         });
 
     });
