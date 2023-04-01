@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PrivateControllers\XUserController;
 use App\Http\Controllers\PublicControllers\GeneralController;
 use App\Http\Controllers\PublicControllers\PostController;
 use App\Http\Controllers\PublicControllers\PublisherController;
@@ -37,5 +38,13 @@ Route::prefix('/v1')->group(function() {
 
     Route::prefix('/publishers')->group(function() {
         Route::get('/', [PublisherController::class, 'index']);
+    });
+
+    Route::middleware('auth:sanctum')->group(function() {
+
+        Route::prefix('/x-user')->group(function() {
+            Route::get('/', [XUserController::class, 'index']);
+        });
+
     });
 });
