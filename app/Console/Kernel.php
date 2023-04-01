@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
             SourceHandler::runNewsSources();
-        })->everyMinute();
+        })->everyTenMinutes();
     }
 
     /**
