@@ -26,6 +26,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $with = [
+        'feed'
+    ];
+
+    public function feed()
+    {
+        return $this->hasOne(Feed::class);
+    }
+
     public static function boot()
     {
         parent::boot();
@@ -33,6 +42,13 @@ class User extends Authenticatable
         static::creating(function ($model) {
             $model->id = (string) Str::uuid();
             $model->email_verification_code = rand(100000, 999999);
+        });
+
+        static::created(function ($model) {
+            $new_feed = new Feed;
+            $new_feed->user_id = $model->id;
+            $new_feed->settings = [];
+            $new_feed->save();
         });
     }
 }
