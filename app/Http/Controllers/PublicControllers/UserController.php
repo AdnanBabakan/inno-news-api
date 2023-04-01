@@ -44,17 +44,17 @@ class UserController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return [
+            return response([
                 'status' => 'FAILED',
                 'message' => 'INVALID_CREDENTIALS'
-            ];
+            ])->setStatusCode(403);
         }
 
         if ($user->email_verified_at == null) {
-            return [
+            return response([
                 'status' => 'FAILED',
                 'message' => 'EMAIL_NOT_VERIFIED'
-            ];
+            ])->setStatusCode(403);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -76,17 +76,17 @@ class UserController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return [
+            return response([
                 'status' => 'FAILED',
                 'message' => 'INVALID_CREDENTIALS'
-            ];
+            ])->setStatusCode(403);
         }
 
         if ($user->email_verified_at != null) {
-            return [
+            return response([
                 'status' => 'FAILED',
                 'message' => 'EMAIL_ALREADY_VERIFIED'
-            ];
+            ])->setStatusCode(403);
         }
 
         $user->email_verification_code = rand(100000, 999999);
@@ -111,24 +111,24 @@ class UserController extends Controller
         $user = User::where('id', $verification_signature_parts[0])->first();
 
         if (!$user) {
-            return [
+            return response([
                 'status' => 'FAILED',
                 'message' => 'INVALID_VERIFICATION_SIGNATURE'
-            ];
+            ])->setStatusCode(403);
         }
 
         if ($user->email_verified_at != null) {
-            return [
+            return response([
                 'status' => 'FAILED',
                 'message' => 'EMAIL_ALREADY_VERIFIED'
-            ];
+            ])->setStatusCode(403);
         }
 
         if ($user->email_verification_code != $verification_signature_parts[1]) {
-            return [
+            return response([
                 'status' => 'FAILED',
                 'message' => 'INVALID_VERIFICATION_SIGNATURE'
-            ];
+            ])->setStatusCode(403);
         }
 
         $user->email_verified_at = now();
