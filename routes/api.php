@@ -51,6 +51,7 @@ Route::prefix('/v1')->group(function() {
         Route::prefix('/feed')->group(function() {
             Route::get('/', [FeedController::class, 'index']);
             Route::get('/posts', [FeedController::class, 'posts']);
+            Route::put('/', [FeedController::class, 'update']);
         });
 
     });

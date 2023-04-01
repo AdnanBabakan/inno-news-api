@@ -47,6 +47,17 @@ class FeedController extends Controller
 
     public function update(Request $request)
     {
+        $request->validate([
+            'settings' => 'required|array',
+            'settings.by' => 'required|string',
+        ]);
 
+        $request->user()->feed->settings = $request->settings;
+        $request->user()->feed->save();
+
+        return [
+            'status' => 'SUCCESSFUL',
+            'message' => 'FEED_UPDATED_SUCCESSFULLY'
+        ];
     }
 }
